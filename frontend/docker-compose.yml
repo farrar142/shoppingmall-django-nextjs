@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  extension:
+    healthcheck:
+      test: ["CMD","curl","-f", "http://172.17.0.1:3002",]
+      interval: 1s
+      retries: 30
+      start_period: 60s
+    build: .
+    container_name: ${CONTAINER_NAME}
+    user: root
+    entrypoint: sh command.sh
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules/
+    ports:
+      - 3002:3000
+    restart: unless-stopped
+    # cpus: .10
+    # mem_limit: "512M"

@@ -1,0 +1,32 @@
+<form
+  method="post"
+  onsubmit="return false;upload(e);"
+  enctype="multipart/form-data"
+  novalidate
+  id="form"
+>
+  <input type="file" id="multiFiles" name="file" />
+  <button type="submit" onclick="upload()">안되는거</button>
+</form>
+{% comment %}
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">되는거</button>
+</form>
+{% endcomment %}
+<script>
+  function upload(e) {
+    const filesEl = window.document.querySelector("#multiFiles");
+    const form = new FormData();
+    console.log(filesEl.files[0]);
+    form.append("file", filesEl.files[0]);
+    const url = "https://shopbackend.honeycombpizza.link/api/accounts/test";
+    const method = "post";
+
+    fetch(url, {
+      method: method,
+      headers: {},
+      body: form,
+    }).then((res) => console.log(res));
+  }
+</script>
